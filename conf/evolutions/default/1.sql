@@ -6,6 +6,7 @@
 create table feed (
   id                            varchar(40) not null,
   phone                         varchar(255),
+  email                         varchar(255),
   imei                          varchar(255),
   file                          varchar(255),
   added                         datetime(6),

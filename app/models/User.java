@@ -47,4 +47,8 @@ public class User extends Model {
       ", imei='" + imei + '\'' +
       '}';
   }
+
+  public User get() {
+    return User.find.byId(this.email);
+  }
 }

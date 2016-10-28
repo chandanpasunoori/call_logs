@@ -20,6 +20,7 @@ public class Feed extends Model {
   @Id
   public UUID id;
   public String phone;
+  public String email;
   public String imei;
   public String file;
   @Formats.DateTime(pattern = "yyyyMMdd")
@@ -27,6 +28,11 @@ public class Feed extends Model {
 
   public static List<Feed> getFeedsByPhone(Integer start, Integer end, String phone) {
     PagedList<Feed> pagedList = Feed.find.where().eq("phone", phone).order().desc("added").findPagedList(start, end);
+    return pagedList.getList();
+  }
+
+  public static List<Feed> getFeedsByEmail(Integer start, Integer end, String email) {
+    PagedList<Feed> pagedList = Feed.find.where().eq("email", email).order().desc("added").findPagedList(start, end);
     return pagedList.getList();
   }
 }

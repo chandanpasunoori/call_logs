@@ -7,11 +7,13 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.db.DBApi;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import scala.concurrent.ExecutionContextExecutor;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Objects;
 
 /**
  * Created by chandan on 28/10/16.
@@ -51,10 +53,19 @@ public class LoginController extends Controller {
     }
   }
 
+  public Result logout() {
+    session().clear();
+    return redirect(routes.LoginController.loginGet());
+  }
 
   public Result loginGet() {
-    Form<User> userForm = formFactory.form(User.class);
-    return ok(views.html.login.render(userForm));
+    String is_logged = session("is_logged");
+    if (is_logged != null && Objects.equals(is_logged, "true")) {
+      return redirect(routes.DashboardController.dashboard());
+    } else {
+      Form<User> userForm = formFactory.form(User.class);
+      return ok(views.html.login.render(userForm));
+    }
   }
 
   public Result loginPost() {
@@ -64,6 +75,11 @@ public class LoginController extends Controller {
     } else {
       User user = userForm.get();
       if (user.authenticate()) {
+        User db_user = user.get();
+        session("is_logged", "true");
+        session("email", db_user.email);
+        session("phone", db_user.phone);
+        session("imei", db_user.imei);
         return redirect(routes.DashboardController.dashboard());
       } else {
         return badRequest(views.html.login.render(userForm));

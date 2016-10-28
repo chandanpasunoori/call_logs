@@ -5,8 +5,9 @@ $(document).ready(function () {
   var win = $(window);
   // Each time the user scrolls
 
-  var start = 0;
-  var end = 20;
+  var page = 0;
+  var size = 50;
+  var feedno = 1;
   load_more();
   win.scroll(function () {
     // End of the document reached?
@@ -18,16 +19,17 @@ $(document).ready(function () {
   function load_more() {
     $('#loading').show();
     $.ajax({
-      url: '/getfeeds/' + start + "/" + end,
+      url: '/getfeeds/' + page++ + "/" + size,
       dataType: 'html',
       success: function (data) {
 
         var feeds = JSON.parse(data);
 
         feeds.forEach(function (feed) {
-          console.log(JSON.stringify(feed));
+          // console.log(JSON.stringify(feed));
           $('#feeds').append(
             '<tr>' +
+            '<td>' + feedno++ + '</td>' +
             '<td>' + feed.phone + '</td>' +
             '<td>' + feed.imei + '</td>' +
             '<td>' + feed.file + '</td>' +
@@ -39,8 +41,6 @@ $(document).ready(function () {
         $('#loading').hide();
       }
     });
-    start = end;
-    end += 20;
   }
 
 });
