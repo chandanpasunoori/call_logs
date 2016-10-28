@@ -1,0 +1,27 @@
+@()
+@main("Welcome to Call Logs Monitoring System") {
+  <script src="@routes.Assets.versioned("js/dashboard.js")" type="text/javascript"></script>
+  <p id="loading">
+    <img src="@routes.Assets.versioned("images/loading.gif")" alt="Loading…" />
+  </p>
+  <div class="row">
+    <div class="col-md-12">
+      <table id="feeds" class="table table-bordered">
+        <tr>
+          <td>Phone Number</td>
+          <td>IMEI</td>
+          <td>FILE</td>
+          <td>ADDED</td>
+          <td>Action</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="modal fade" id="file_model" tabindex="-1" role="dialog" aria-labelledby="file_model_label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div> <!-- /.modal -->
+}

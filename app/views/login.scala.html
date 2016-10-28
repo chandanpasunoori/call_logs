@@ -1,0 +1,9 @@
+@(login_form: Form[User])
+@main("Welcome to Call Logs Monitoring System") {
+  @helper.form(action = routes.LoginController.loginPost(), 'id -> "login_form") {
+    @helper.inputText(login_form("email"))
+    @helper.inputPassword(login_form("password"))
+    <button type="submit" name="edit" id="edit" class="btn btn-primary">Submit</button>
+    <a href="@routes.LoginController.registerGet()" class="btn btn-primary">Register New User</a>
+  }
+}
